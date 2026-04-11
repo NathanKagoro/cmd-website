@@ -1,0 +1,5 @@
+* text=auto
+
+# Netlify and shell scripts must use LF in CI/Linux environments.
+netlify.toml text eol=lf
+*.sh text eol=lf

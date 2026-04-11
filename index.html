@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nathan OS Terminal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="terminal">
+    <div id="output"></div>
+    <div id="input-line">
+      <span id="prompt">C:\NathanOS></span>
+      <input id="command-input" type="text" autofocus autocomplete="off" />
+    </div>
+  </div>
+
+  <div id="overlay" class="hidden">
+    <div id="overlay-body"></div>
+    <button id="overlay-close">X</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="desktop.js"></script>
+  <script src="games/tictactoe.js"></script>
+  <script src="games/rps.js"></script>
+  <script src="games/hangman.js"></script>
+  <script src="games/2048.js"></script>
+
+</body>
+</html>
