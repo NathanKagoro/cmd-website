@@ -351,6 +351,7 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
   // Intro text
   const intro = `Nathan OS [Build 1.0.5]
 © Nathan Kagoro. All rights reserved.
+This is a portfolio site built to mimic classic operating system experiences.
 
 Site built for Laptops and PCs. For the best experience, please use a desktop device in landscape orientation with a screen width of at least 600px.
 System initializing...

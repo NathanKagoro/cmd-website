@@ -1,0 +1,13 @@
+{
+  "name": "cmd-website-workspace",
+  "private": true,
+  "workspaces": [
+    "projects/MMM-Dashboard",
+    "projects/Stock Exchange/backend",
+    "projects/Stock Exchange/frontend"
+  ],
+  "scripts": {
+    "build:mmm": "npm run build --workspace \"projects/MMM-Dashboard\"",
+    "build:stock": "npm run build --workspace \"projects/Stock Exchange/frontend\""
+  }
+}

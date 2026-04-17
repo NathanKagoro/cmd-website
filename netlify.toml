@@ -1,10 +1,10 @@
 [functions]
 directory = "netlify/functions"
-included_files = ["projects/Stock Exchange/data_pipeline/data/raw/historical_stock_prices_2015_2025.csv"]
+included_files = ["projects/Stock Exchange/backend/src/data/historical_stock_prices_2015_2025.csv"]
 node_bundler = "esbuild"
 
 [build]
-command = "set -e; npm --prefix projects/MMM-Dashboard install; npm --prefix projects/MMM-Dashboard run build; mkdir -p mmm; if [ -d \"projects/MMM-Dashboard/build\" ]; then cp -r \"projects/MMM-Dashboard/build/.\" mmm/; fi; npm --prefix \"projects/Stock Exchange/backend\" install; npm --prefix \"projects/Stock Exchange/frontend\" install; npm --prefix \"projects/Stock Exchange/frontend\" run build; mkdir -p stock; if [ -d \"projects/Stock Exchange/frontend/dist\" ]; then cp -r \"projects/Stock Exchange/frontend/dist/.\" stock/; fi; mkdir -p laki; if [ -d \"projects/Laki Associates Demo Site\" ]; then cp -r \"projects/Laki Associates Demo Site/.\" laki/; elif [ -d \"projects/Laki Associates Website\" ]; then cp -r \"projects/Laki Associates Website/.\" laki/; fi"
+command = "set -e; npm ci; npm run build:mmm; mkdir -p mmm; if [ -d \"projects/MMM-Dashboard/build\" ]; then cp -r \"projects/MMM-Dashboard/build/.\" mmm/; fi; npm run build:stock; mkdir -p stock; if [ -d \"projects/Stock Exchange/frontend/dist\" ]; then cp -r \"projects/Stock Exchange/frontend/dist/.\" stock/; fi; mkdir -p laki; if [ -d \"projects/Laki Associates Demo Site\" ]; then cp -r \"projects/Laki Associates Demo Site/.\" laki/; elif [ -d \"projects/Laki Associates Website\" ]; then cp -r \"projects/Laki Associates Website/.\" laki/; fi"
 publish = "."
 
 [[redirects]]
