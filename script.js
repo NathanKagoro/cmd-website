@@ -704,8 +704,11 @@ Boot complete.`;
       document.removeEventListener('pointerdown', finishIntro, true);
     }
 
-    finishIntro = () => {
+    finishIntro = (event) => {
       if (finished) return;
+      // Letters still reach the input so typing can start at once, but a
+      // Space or Enter used only to skip shouldn't land in the prompt.
+      if (event && (event.key === ' ' || event.key === 'Enter')) event.preventDefault();
       finished = true;
       clearTimeout(timer);
       cleanup();
