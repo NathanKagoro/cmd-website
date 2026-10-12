@@ -47,13 +47,13 @@ status = 200
 
 [[redirects]]
 from = "/2048"
-to = "/games/2048/entry/2048 entry.html"
+to = "/games/2048/"
 status = 301
 
 [[redirects]]
 from = "/2048/*"
-to = "/games/2048/:splat"
-status = 200
+to = "/games/2048/"
+status = 301
 
 [[redirects]]
 from = "/*"
