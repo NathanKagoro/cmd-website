@@ -2,11 +2,6 @@
 command = "bash build.sh"
 publish = "dist"
 
-[functions]
-directory = "netlify/functions"
-included_files = ["projects/stock-exchange/backend/src/data/historical_stock_prices_2015_2025.csv"]
-node_bundler = "esbuild"
-
 # Projects hosted on GitHub Pages (free, no Netlify credits).
 # Old /laki and /mmm links keep working.
 [[redirects]]
@@ -29,12 +24,7 @@ from = "/mmm"
 to = "https://nathankagoro.github.io/MMM-Dashboard/"
 status = 301
 
-# Stock Exchange (built from the submodule)
-[[redirects]]
-from = "/api/*"
-to = "/.netlify/functions/stock-api/:splat"
-status = 200
-
+# Stock Exchange (static, built from the submodule; runs entirely in the browser)
 [[redirects]]
 from = "/stock"
 to = "/stock/index.html"

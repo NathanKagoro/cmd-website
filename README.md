@@ -65,7 +65,7 @@ Each project lives in its own repository. Nothing is copied into this repo.
 
 Static projects are on GitHub Pages because it is free. Netlify's credit plan charges per production deploy and per GB served. Old `/laki` and `/mmm` links redirect there.
 
-The Stock Exchange needs a backend, so it stays on Netlify. It is included as a **git submodule** at `projects/stock-exchange`, built into `/stock`, and its Express API runs as the `stock-api` Netlify Function behind `/api/*`.
+The Stock Exchange is included as a **git submodule** at `projects/stock-exchange` and built into `/stock`. It runs entirely in the browser: its build step turns the price CSV into compact yearly data files, so there is no server or Netlify Function.
 
 ### 4) Games
 
@@ -84,9 +84,8 @@ The 2048 experience is routed and organized with shared and game-specific assets
 - `assets/`: icons, background, resume, favicon and the `og-image.png` social preview.
 - `games/`: game scripts and the 2048 pages.
 - `projects/stock-exchange/`: git submodule of [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator).
-- `netlify/functions/stock-api.js`: wraps the Stock backend as a Netlify Function.
 - `build.sh`: assembles only the files visitors need into `dist/`, which is what Netlify publishes.
-- `netlify.toml`: build, redirects and function configuration.
+- `netlify.toml`: build and redirect configuration.
 
 ## Working With the Submodule
 
@@ -122,7 +121,7 @@ bash build.sh
 npx serve dist
 ```
 
-Redirects and the `/api` function only run on Netlify. Use `netlify dev` to test those locally.
+Redirects only run on Netlify. Use `netlify dev` to test those locally.
 
 ## Maintenance Notes
 
