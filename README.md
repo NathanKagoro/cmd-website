@@ -15,20 +15,32 @@ The repository is configured for Netlify-first deployment and routing.
 
 The homepage provides a command-line interface where users can run commands to navigate content and launch features.
 
-Core command groups include:
+Commands:
 
-- Profile and contact: resume, links, about.
-- Projects: projects, laki, mmm, stock.
-- Games: play tictactoe, play rps, play hangman, play 2048.
-- Utility: datetime, clear, commands.
-- View transition: update (switches into desktop mode).
+| Command | What it does |
+|---|---|
+| `help` (also `commands`, `ls`, `?`) | List commands |
+| `about` | About Nathan |
+| `projects` / `projects <alias>` | List projects or open one |
+| `laki`, `mmm`, `stock` | Open a project directly |
+| `resume` | View the CV, with a Download PDF link (phones get the link instead of an embedded PDF) |
+| `links` | LinkedIn and GitHub |
+| `play <game>` (also `games`) | `tictactoe`, `rps`, `hangman`, `2048` |
+| `datetime` | Current date and time |
+| `sound on` / `sound off` | Typing beeps; off by default, remembered in localStorage |
+| `clear` | Clear the screen |
+| `update` | Switch into desktop mode |
 
 Behavior includes:
 
-- Command parsing with argument support.
-- Command history via keyboard navigation.
-- Lightweight loading and sound feedback.
-- Overlay rendering for embedded content such as the resume and games.
+- Command chips under the prompt (about, projects, resume, games, links) that run commands through the normal path, so tapping works on phones.
+- Tab completes commands and `projects` / `play` / `sound` arguments; unknown commands suggest the closest match.
+- Command history with the up/down arrows.
+- A short typed intro that any key or tap skips (printed instantly with `prefers-reduced-motion`).
+- A deliberate ~500 ms "Loading" pause before each command.
+- Overlays (resume, games) are modal dialogs: Escape, the X button or the backdrop close them, and focus returns to the prompt.
+- A plain-HTML "quick view" (name, role, projects, resume, links) in `index.html` for search engines, no-JS visitors and screen readers. It is hidden once the terminal starts; the "Skip the terminal" link and the `quick view` chip show it.
+- Responsive layout for phones down to 360px wide.
 
 ### 2) Desktop Mode
 
@@ -69,7 +81,7 @@ The 2048 experience is routed and organized with shared and game-specific assets
 ## Repository Structure
 
 - `index.html`, `style.css`, `script.js`, `desktop.js`: terminal and desktop UI.
-- `assets/`: icons, background, resume.
+- `assets/`: icons, background, resume, favicon and the `og-image.png` social preview.
 - `games/`: game scripts and the 2048 pages.
 - `projects/stock-exchange/`: git submodule of [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator).
 - `netlify/functions/stock-api.js`: wraps the Stock backend as a Netlify Function.

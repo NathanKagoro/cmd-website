@@ -50,12 +50,9 @@ const Desktop = (() => {
     desktopEl.style.color = 'white';
     desktopEl.style.fontFamily = 'sans-serif';
 
-    const iconsDiv = document.createElement('div');
-    iconsDiv.style.display = 'flex';
-    iconsDiv.style.flexWrap = 'wrap';
-    iconsDiv.style.gap = '60px';
-    iconsDiv.style.padding = '50px';
+    const iconsDiv = document.createElement('nav');
     iconsDiv.id = 'desktop-icons';
+    iconsDiv.setAttribute('aria-label', 'Desktop');
     desktopEl.appendChild(iconsDiv);
 
     const icons = [
@@ -79,18 +76,19 @@ const Desktop = (() => {
       }
     ];
 
+    // Real buttons so icons work with keyboard and touch.
     icons.forEach(i => {
-      const iconEl = document.createElement('div');
-      iconEl.style.display = 'flex';
-      iconEl.style.flexDirection = 'column';
-      iconEl.style.alignItems = 'center';
-      iconEl.style.cursor = 'pointer';
-      iconEl.innerHTML = `<img src="${i.icon}" style="width:64px;height:64px;"><span>${i.name}</span>`;
+      const iconEl = document.createElement('button');
+      iconEl.type = 'button';
+      iconEl.className = 'desktop-icon';
+      iconEl.innerHTML = `<img src="${i.icon}" alt=""><span>${i.name}</span>`;
       iconEl.addEventListener('click', i.action);
       iconsDiv.appendChild(iconEl);
     });
 
     document.body.appendChild(desktopEl);
+    const firstIcon = iconsDiv.querySelector('button');
+    if (firstIcon) firstIcon.focus();
   }
 
   function exit() {
