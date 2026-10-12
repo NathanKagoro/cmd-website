@@ -76,13 +76,13 @@ Games are available via command and desktop launch:
 - Hangman
 - 2048
 
-The 2048 experience is routed and organized with shared and game-specific assets under the games tree.
+2048 lives in its own repo ([NathanKagoro/2048](https://github.com/NathanKagoro/2048)), included here as a submodule. It plays inside the overlay, and `/2048` opens its standalone page.
 
 ## Repository Structure
 
 - `index.html`, `style.css`, `script.js`, `desktop.js`: terminal and desktop UI.
 - `assets/`: icons, background, resume, favicon and the `og-image.png` social preview.
-- `games/`: game scripts and the 2048 pages.
+- `games/`: game scripts. `games/2048/` is a git submodule of [2048](https://github.com/NathanKagoro/2048).
 - `projects/stock-exchange/`: git submodule of [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator).
 - `build.sh`: assembles only the files visitors need into `dist/`, which is what Netlify publishes.
 - `netlify.toml`: build and redirect configuration.
@@ -98,7 +98,7 @@ git clone --recurse-submodules https://github.com/NathanKagoro/cmd-website
 After pushing changes to stock-exchange-simulator, update the pinned version here:
 
 ```
-git submodule update --remote projects/stock-exchange
+git submodule update --remote projects/stock-exchange   # or games/2048
 git commit -am "Update stock-exchange"
 ```
 

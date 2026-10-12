@@ -1,3 +1,6 @@
 [submodule "projects/stock-exchange"]
 	path = projects/stock-exchange
 	url = https://github.com/NathanKagoro/stock-exchange-simulator.git
+[submodule "games/2048"]
+	path = games/2048
+	url = https://github.com/NathanKagoro/2048.git
