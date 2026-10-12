@@ -1,1 +1,1 @@
-module.exports = require("../../projects/Stock Exchange/backend/src/netlifyHandler");
+module.exports = require("../../projects/stock-exchange/backend/src/netlifyHandler");

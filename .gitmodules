@@ -1,0 +1,3 @@
+[submodule "projects/stock-exchange"]
+	path = projects/stock-exchange
+	url = https://github.com/NathanKagoro/stock-exchange-simulator.git

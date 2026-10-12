@@ -41,15 +41,19 @@ The desktop mode is a separate UI layer rendered over the page. It provides icon
 
 The terminal and desktop views are route-aware, using the browser history state for a windowed route and default terminal route.
 
-### 3) Embedded Projects
+### 3) Projects
 
-The site routes to three main subprojects:
+Each project lives in its own repository. Nothing is copied into this repo.
 
-- /laki: Laki Associates Website
-- /mmm: MMM Dashboard
-- /stock: Stock Exchange app
+| Command | Project | Repository | Hosted on |
+|---|---|---|---|
+| `laki` | Laki Associates Website | [Laki-associates-demo-website](https://github.com/NathanKagoro/Laki-associates-demo-website) | [GitHub Pages](https://nathankagoro.github.io/Laki-associates-demo-website/) |
+| `mmm` | MMM Dashboard | [MMM-Dashboard](https://github.com/NathanKagoro/MMM-Dashboard) | [GitHub Pages](https://nathankagoro.github.io/MMM-Dashboard/) |
+| `stock` | Stock Exchange | [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator) | this site, at `/stock` (git submodule) |
 
-These are integrated through terminal commands and desktop project links, not as isolated standalone pages.
+Static projects are on GitHub Pages because it is free. Netlify's credit plan charges per production deploy and per GB served. Old `/laki` and `/mmm` links redirect there.
+
+The Stock Exchange needs a backend, so it stays on Netlify. It is included as a **git submodule** at `projects/stock-exchange`, built into `/stock`, and its Express API runs as the `stock-api` Netlify Function behind `/api/*`.
 
 ### 4) Games
 
@@ -62,97 +66,53 @@ Games are available via command and desktop launch:
 
 The 2048 experience is routed and organized with shared and game-specific assets under the games tree.
 
-## Architecture Summary
+## Repository Structure
 
-### Root Site
+- `index.html`, `style.css`, `script.js`, `desktop.js`: terminal and desktop UI.
+- `assets/`: icons, background, resume.
+- `games/`: game scripts and the 2048 pages.
+- `projects/stock-exchange/`: git submodule of [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator).
+- `netlify/functions/stock-api.js`: wraps the Stock backend as a Netlify Function.
+- `build.sh`: assembles only the files visitors need into `dist/`, which is what Netlify publishes.
+- `netlify.toml`: build, redirects and function configuration.
 
-- Static terminal shell (HTML/CSS/JS).
-- Command router and feature wiring in the main script.
-- Desktop UI implementation in a dedicated desktop module.
+## Working With the Submodule
 
-### Subproject: MMM Dashboard
+Clone with submodules:
 
-- React app (CRA build output).
-- Served under /mmm with SPA redirect behavior.
-- Built and copied into site publish output during Netlify build.
+```
+git clone --recurse-submodules https://github.com/NathanKagoro/cmd-website
+```
 
-### Subproject: Stock Exchange
+After pushing changes to stock-exchange-simulator, update the pinned version here:
 
-- React (Vite) frontend served under /stock.
-- Express backend wrapped as a Netlify Function.
-- Frontend API calls in production are routed to /api/*.
-- Historical CSV data is bundled for function access.
+```
+git submodule update --remote projects/stock-exchange
+git commit -am "Update stock-exchange"
+```
 
-### Subproject: Laki Associates Website
+Netlify checks out submodules of public repositories automatically.
 
-- Static site copied into /laki during build.
-- Supports both legacy and demo-site source folder naming.
+## Deploying (and Saving Netlify Credits)
 
-## Netlify Deployment Model
+On Netlify's free credit plan, each production deploy costs 15 credits, out of 300 a month shared by every site on the team. Branch deploys and deploy previews are free.
 
-This repository is intended to run under Netlify with:
+The intended flow:
 
-- Redirect rules for:
-	- /laki
-	- /mmm and /mmm/*
-	- /stock and /stock/*
-	- /2048 and /2048/*
-	- /api/* to the Stock API function
-- Build steps that install and build each required subproject.
-- Function bundling for the Stock backend.
+- Netlify's production branch is `release`.
+- Day-to-day work goes to `main` (or feature branches), which get free branch-deploy previews.
+- When a batch of changes is ready, merge `main` into `release`. That is one production deploy.
 
-Because of this setup, route behavior and API behavior depend on Netlify redirects/functions being active.
+## Local Build
 
-## Local Development Notes
+```
+bash build.sh
+npx serve dist
+```
 
-Some parts work locally as static files, but full behavior requires Netlify-like routing.
-
-Typical local differences:
-
-- Directly opening nested files may bypass expected route redirects.
-- Subpath SPAs may not resolve assets/routes correctly without proper hosting base path.
-- Stock frontend API calls may fail unless backend routing is mirrored.
-
-If you test locally, use a server setup that mimics:
-
-- Rewrite/redirect behavior
-- Subpath hosting
-- /api forwarding to the function/backend
-
-## Why Some Projects/Games May Not Run Correctly Outside Main Site
-
-Certain components assume they are launched from the main shell context:
-
-- Route entry points are controlled by command/desktop navigation.
-- Overlays and command-driven interactions depend on the terminal app lifecycle.
-- Subprojects rely on site-level redirects and hosted path conventions.
-
-For this reason, running individual project files directly from arbitrary paths can produce missing assets, route errors, or API errors.
-
-## Repository Structure (High-Level)
-
-- Root shell: terminal UI, desktop UI, shared assets.
-- games/: game scripts and 2048 route-specific pages/assets.
-- projects/Laki Associates Website/: static project site.
-- projects/MMM-Dashboard/: React dashboard project.
-- projects/Stock Exchange/: frontend, backend, and data pipeline.
-- netlify/: Netlify Functions entry points.
-- netlify.toml: build, redirects, and function configuration.
-
-## Recommended Validation Flow
-
-1. Build subprojects through the configured build pipeline.
-2. Verify routed entry points:
-	 - /
-	 - /laki
-	 - /mmm
-	 - /stock
-	 - /2048
-3. Verify Stock API-backed views load data through /api.
-4. Verify terminal commands and desktop transitions still work.
+Redirects and the `/api` function only run on Netlify. Use `netlify dev` to test those locally.
 
 ## Maintenance Notes
 
 - Keep line endings for deployment config and shell scripts as LF.
-- Keep route aliases stable for command compatibility.
-- When renaming source folders for embedded projects, preserve destination route naming.
+- Keep command aliases (`laki`, `mmm`, `stock`) stable.

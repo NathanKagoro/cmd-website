@@ -89,17 +89,17 @@
     {
       alias: 'laki',
       name: 'Laki Associates Website',
-      entryPath: '/laki',
+      entryPath: 'https://nathankagoro.github.io/Laki-associates-demo-website/',
       files: [
-        { name: 'website (/laki)', path: '/laki' }
+        { name: 'website (GitHub Pages)', path: 'https://nathankagoro.github.io/Laki-associates-demo-website/' }
       ]
     },
     {
       alias: 'mmm',
       name: 'MMM-Dashboard',
-      entryPath: '/mmm',
+      entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/',
       files: [
-        { name: 'dashboard (/mmm)', path: '/mmm' }
+        { name: 'dashboard (GitHub Pages)', path: 'https://nathankagoro.github.io/MMM-Dashboard/' }
       ]
     },
     {
