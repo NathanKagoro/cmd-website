@@ -234,31 +234,20 @@
 
   // ---------- Projects ----------
 
+  // Each project lives in its own GitHub repo (github.com/NathanKagoro/<repo>).
+  // Static projects are on GitHub Pages; the Stock Exchange is built into /stock.
   const PROJECTS = [
-    {
-      alias: 'laki',
-      name: 'Laki Associates Website',
-      entryPath: 'https://nathankagoro.github.io/Laki-associates-demo-website/',
-      files: [
-        { name: 'website (GitHub Pages)', path: 'https://nathankagoro.github.io/Laki-associates-demo-website/' }
-      ]
-    },
-    {
-      alias: 'mmm',
-      name: 'MMM-Dashboard',
-      entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/',
-      files: [
-        { name: 'dashboard (GitHub Pages)', path: 'https://nathankagoro.github.io/MMM-Dashboard/' }
-      ]
-    },
-    {
-      alias: 'stock',
-      name: 'Stock Exchange',
-      entryPath: '/stock',
-      files: [
-        { name: 'stock exchange (/stock)', path: '/stock' }
-      ]
-    }
+    { alias: 'damana', name: 'Damana Consult', category: 'Client & business sites', blurb: 'Management consultancy in Dar es Salaam (live client site)', entryPath: 'https://damanaconsultant.com/', repo: 'damana-consult-website' },
+    { alias: 'diplotech', name: 'Diplotech Solutions', category: 'Client & business sites', blurb: 'Consultancy where diplomacy meets technology', entryPath: 'https://nathankagoro.github.io/diplotech-website/', repo: 'diplotech-website' },
+    { alias: 'laki', name: 'Laki Associates', category: 'Client & business sites', blurb: 'Demo site for an accounting and audit firm', entryPath: 'https://nathankagoro.github.io/Laki-associates-demo-website/', repo: 'Laki-associates-demo-website' },
+    { alias: 'exortium', name: 'Exortium', category: 'Client & business sites', blurb: 'Demo site for a marketing agency', entryPath: 'https://nathankagoro.github.io/exortium-website/', repo: 'exortium-website' },
+    { alias: 'swahili', name: 'Swahili Voice IDE', category: 'Products & prototypes', blurb: 'Learn to code in Swahili, right in the browser', entryPath: 'https://nathankagoro.github.io/Swahili-ide/', repo: 'Swahili-ide' },
+    { alias: 'mathpath', name: 'MathPath', category: 'Products & prototypes', blurb: 'Maths practice prototype with student and teacher views', entryPath: 'https://nathankagoro.github.io/mathpath-prototype/', repo: 'mathpath-prototype' },
+    { alias: 'yuge', name: 'YugeSavers', category: 'Products & prototypes', blurb: 'Discount supermarket app prototype', entryPath: 'https://nathankagoro.github.io/yugesavers-prototype/', repo: 'yugesavers-prototype' },
+    { alias: 'stock', name: 'Stock Exchange', category: 'Products & prototypes', blurb: 'Trade a replay of the London market, 2015 to 2025', entryPath: '/stock', repo: 'stock-exchange-simulator' },
+    { alias: 'mmm', name: 'MMM Dashboard', category: 'Data & analytics', blurb: 'Which marketing channels move sales: a media-mix model', entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/', repo: 'MMM-Dashboard' },
+    { alias: 'traffic', name: 'Dar Traffic Monitoring', category: 'Data & analytics', blurb: 'Traffic data pipeline for East African cities', entryPath: 'https://nathankagoro.github.io/Dar-Traffic-Monitoring/', repo: 'Dar-Traffic-Monitoring' },
+    { alias: 'news', name: 'News Detection', category: 'Data & analytics', blurb: 'Media monitoring: a watch-list in, a morning digest out', entryPath: 'https://nathankagoro.github.io/news-detection/', repo: 'news-detection' }
   ];
 
   const GAMES = ['tictactoe', 'rps', 'hangman', '2048'];
@@ -375,10 +364,7 @@
   function helpText() {
     const rows = [
       ['about', 'About Nathan'],
-      ['projects', 'List projects, or open one: projects &lt;alias&gt;'],
-      ['  laki', 'Open Laki Associates Website'],
-      ['  mmm', 'Open MMM-Dashboard'],
-      ['  stock', 'Open Stock Exchange'],
+      ['projects', `List all ${PROJECTS.length} projects, or open one by typing its name (e.g. ${PROJECTS[0].alias})`],
       ['resume', 'View or download the CV'],
       ['links', 'LinkedIn and GitHub'],
       ['play', 'Play a game: play &lt;game&gt; (alias: games)'],
@@ -397,8 +383,17 @@
   }
 
   function projectsList() {
-    const rows = PROJECTS.map((p) => `<dt>${cmdButton(`projects ${p.alias}`, p.alias)}</dt><dd>${escapeHtml(p.name)}</dd>`).join('');
-    return `Projects available:<dl class="help-table">${rows}</dl><span class="dim">Use: projects &lt;alias&gt; or projects "project name"</span>`;
+    const groups = [];
+    PROJECTS.forEach((p) => {
+      let g = groups.find((x) => x.name === p.category);
+      if (!g) { g = { name: p.category, items: [] }; groups.push(g); }
+      g.items.push(p);
+    });
+    const sections = groups.map((g) => {
+      const rows = g.items.map((p) => `<dt>${cmdButton(p.alias)}</dt><dd><strong>${escapeHtml(p.name)}</strong> · ${escapeHtml(p.blurb)}</dd>`).join('');
+      return `<div class="project-group">${escapeHtml(g.name)}</div><dl class="help-table">${rows}</dl>`;
+    }).join('');
+    return `Projects:${sections}<span class="dim">Type a name to open it (or projects &lt;name&gt;). Source code: ${cmdButton('links')}</span>`;
   }
 
   function gamesList() {
@@ -448,12 +443,6 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
       return openProject(project);
     },
 
-    laki: async () => openProject(findProjectByName('laki')),
-
-    mmm: async () => openProject(findProjectByName('mmm')),
-
-    stock: async () => openProject(findProjectByName('stock')),
-
     datetime: async () => {
       const d = new Date();
       return `${d.toDateString()} ${d.toLocaleTimeString()}`;
@@ -501,6 +490,10 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
   commands.ls = commands.commands;
   commands['?'] = commands.commands;
   commands.games = commands.play;
+  // Every project alias also works as a command on its own (e.g. `mathpath`).
+  PROJECTS.forEach((p) => {
+    if (!commands[p.alias]) commands[p.alias] = async () => openProject(p);
+  });
 
   // Names offered by Tab completion and "did you mean" (no symbol aliases).
   const COMMAND_NAMES = Object.keys(commands).filter((c) => /^[a-z]/.test(c)).sort();

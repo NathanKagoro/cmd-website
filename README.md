@@ -22,7 +22,7 @@ Commands:
 | `help` (also `commands`, `ls`, `?`) | List commands |
 | `about` | About Nathan |
 | `projects` / `projects <alias>` | List projects or open one |
-| `laki`, `mmm`, `stock` | Open a project directly |
+| any project name (`mmm`, `swahili`, `mathpath`, …) | Open that project directly |
 | `resume` | View the CV, with a Download PDF link (phones get the link instead of an embedded PDF) |
 | `links` | LinkedIn and GitHub |
 | `play <game>` (also `games`) | `tictactoe`, `rps`, `hangman`, `2048` |
@@ -55,13 +55,23 @@ The terminal and desktop views are route-aware, using the browser history state 
 
 ### 3) Projects
 
-Each project lives in its own repository. Nothing is copied into this repo.
+Each project lives in its own repository; nothing is copied into this repo. The list lives in `PROJECTS` in `script.js` (alias, name, category, one-line blurb, URL, repo). Every alias also works as a command on its own, and `projects` lists them by category.
+
+GitHub Pages projects are served at `https://nathankagoro.github.io/<repo>/`. A project's link only works once Pages is switched on for its repo and its improvements are merged into `main`.
 
 | Command | Project | Repository | Hosted on |
 |---|---|---|---|
-| `laki` | Laki Associates Website | [Laki-associates-demo-website](https://github.com/NathanKagoro/Laki-associates-demo-website) | [GitHub Pages](https://nathankagoro.github.io/Laki-associates-demo-website/) |
-| `mmm` | MMM Dashboard | [MMM-Dashboard](https://github.com/NathanKagoro/MMM-Dashboard) | [GitHub Pages](https://nathankagoro.github.io/MMM-Dashboard/) |
+| `damana` | Damana Consult | [damana-consult-website](https://github.com/NathanKagoro/damana-consult-website) | [damanaconsultant.com](https://damanaconsultant.com/) (live client site) |
+| `diplotech` | Diplotech Solutions | [diplotech-website](https://github.com/NathanKagoro/diplotech-website) | GitHub Pages |
+| `laki` | Laki Associates | [Laki-associates-demo-website](https://github.com/NathanKagoro/Laki-associates-demo-website) | GitHub Pages |
+| `exortium` | Exortium | [exortium-website](https://github.com/NathanKagoro/exortium-website) | GitHub Pages |
+| `swahili` | Swahili Voice IDE | [Swahili-ide](https://github.com/NathanKagoro/Swahili-ide) | GitHub Pages |
+| `mathpath` | MathPath | [mathpath-prototype](https://github.com/NathanKagoro/mathpath-prototype) | GitHub Pages |
+| `yuge` | YugeSavers | [yugesavers-prototype](https://github.com/NathanKagoro/yugesavers-prototype) | GitHub Pages |
 | `stock` | Stock Exchange | [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator) | this site, at `/stock` (git submodule) |
+| `mmm` | MMM Dashboard | [MMM-Dashboard](https://github.com/NathanKagoro/MMM-Dashboard) | GitHub Pages |
+| `traffic` | Dar Traffic Monitoring | [Dar-Traffic-Monitoring](https://github.com/NathanKagoro/Dar-Traffic-Monitoring) | GitHub Pages |
+| `news` | News Detection | [news-detection](https://github.com/NathanKagoro/news-detection) | GitHub Pages |
 
 Static projects are on GitHub Pages because it is free. Netlify's credit plan charges per production deploy and per GB served. Old `/laki` and `/mmm` links redirect there.
 

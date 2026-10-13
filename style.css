@@ -346,3 +346,8 @@ html:not(.js) .qv-back { display: none; }
   /* keep a static "busy" ring instead of spinning */
   .spinner { animation: none; }
 }
+
+/* Project groups in the `projects` listing and the quick view */
+.project-group { margin: 10px 0 2px; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+#quick-view h3 { margin: 18px 0 6px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.08em; }
+.qv-src { opacity: 0.75; font-size: 0.9em; }
