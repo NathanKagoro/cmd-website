@@ -57,7 +57,7 @@ The terminal and desktop views are route-aware, using the browser history state 
 
 Each project lives in its own repository; nothing is copied into this repo. The list lives in `PROJECTS` in `script.js` (alias, name, category, one-line blurb, URL, repo). Every alias also works as a command on its own, and `projects` lists them by category.
 
-GitHub Pages projects are served at `https://nathankagoro.github.io/<repo>/`. A project's link only works once Pages is switched on for its repo and its improvements are merged into `main`.
+GitHub Pages projects are served at `https://nathankagoro.github.io/<repo>/`. Dar Traffic Monitoring and News Detection are left out until their pages are built. A project's link only works once Pages is switched on for its repo and its improvements are merged into `main`.
 
 | Command | Project | Repository | Hosted on |
 |---|---|---|---|
@@ -70,8 +70,6 @@ GitHub Pages projects are served at `https://nathankagoro.github.io/<repo>/`. A 
 | `yuge` | YugeSavers | [yugesavers-prototype](https://github.com/NathanKagoro/yugesavers-prototype) | GitHub Pages |
 | `stock` | Stock Exchange | [stock-exchange-simulator](https://github.com/NathanKagoro/stock-exchange-simulator) | this site, at `/stock` (git submodule) |
 | `mmm` | MMM Dashboard | [MMM-Dashboard](https://github.com/NathanKagoro/MMM-Dashboard) | GitHub Pages |
-| `traffic` | Dar Traffic Monitoring | [Dar-Traffic-Monitoring](https://github.com/NathanKagoro/Dar-Traffic-Monitoring) | GitHub Pages |
-| `news` | News Detection | [news-detection](https://github.com/NathanKagoro/news-detection) | GitHub Pages |
 
 Static projects are on GitHub Pages because it is free. Netlify's credit plan charges per production deploy and per GB served. Old `/laki` and `/mmm` links redirect there.
 
