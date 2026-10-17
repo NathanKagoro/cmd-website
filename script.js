@@ -550,6 +550,11 @@ Type ${cmdButton('projects')} to see what I've made.`;
     if (!raw || !raw.trim()) return;
     if (busy) return;
     appendRaw(`C:\\NathanOS> ${raw}`);
+    // The "Type help" hint is only for the first visit to the prompt.
+    if (!hint.hidden) {
+      hint.hidden = true;
+      input.removeAttribute('aria-describedby');
+    }
     history.push(raw);
     historyIndex = history.length;
 
