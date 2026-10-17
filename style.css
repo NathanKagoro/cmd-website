@@ -81,15 +81,11 @@ kbd {
   margin: 12px 0 8px;
   color: var(--green-dim);
 }
+#hint .inline-cmd { color: var(--green); }
+#hint .inline-cmd:hover { color: var(--bg); }
 
-/* Command chips: look like terminal buttons, run through the normal command path */
-#chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.chip {
+/* Bordered terminal-style buttons (resume actions, quick view "back") */
+.btn {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
@@ -102,11 +98,10 @@ kbd {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.chip::before { content: '> '; white-space: pre; color: var(--green-dim); }
-.chip:hover, .chip:active { background: var(--green); color: var(--bg); }
-.chip:hover::before, .chip:active::before { color: var(--bg); }
-.chip:disabled { opacity: 0.5; cursor: progress; }
-.chip-alt { border-style: dashed; }
+.btn::before { content: '> '; white-space: pre; color: var(--green-dim); }
+.btn:hover, .btn:active { background: var(--green); color: var(--bg); }
+.btn:hover::before, .btn:active::before { color: var(--bg); }
+.btn-alt { border-style: dashed; }
 
 /* Clickable command names inside output (help list, suggestions) */
 .inline-cmd {
@@ -119,6 +114,7 @@ kbd {
   cursor: pointer;
 }
 .inline-cmd:hover { background: var(--green); color: var(--bg); }
+.inline-cmd:disabled { cursor: progress; }
 
 .dim { color: var(--green-dim); }
 
@@ -151,16 +147,29 @@ kbd {
 
 /* ---------- Skip link + static quick view ---------- */
 
+/* Visually hidden until it gets keyboard focus. */
 .skip-link {
   position: absolute;
   left: 8px;
-  top: -100px;
+  top: 8px;
   z-index: 2000;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip-link:focus {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
   background: var(--bg);
   border: 1px solid var(--green);
   padding: 8px 12px;
 }
-.skip-link:focus { top: 8px; }
 
 #quick-view {
   padding: 24px max(16px, env(safe-area-inset-left));
@@ -323,8 +332,8 @@ html:not(.js) .qv-back { display: none; }
 @media (max-width: 600px) {
   body { font-size: 17px; }
   :root { --gutter: 16px; }
-  .chip { min-height: 44px; padding: 6px 14px; }
-  #chips { gap: 8px; }
+  .btn { min-height: 44px; padding: 6px 14px; }
+  #hint .inline-cmd { display: inline-block; padding: 8px 0 2px; }
   .help-table { grid-template-columns: 1fr; row-gap: 0; }
   .help-table dt { padding-left: 0; margin-top: 6px; }
   .help-table dd { padding-left: 2ch; }

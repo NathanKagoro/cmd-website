@@ -34,7 +34,7 @@ const Hangman = (() => {
 
     const el = document.createElement('div');
     el.className = 'hangman';
-    el.innerHTML = `<h2>Hangman</h2><p>Guess the hidden word — type letters or tap them below.</p>`;
+    el.innerHTML = `<h2>Hangman</h2><p>Guess the hidden word. Type letters or tap them below.</p>`;
 
     // Gallows + figure (green-on-black to match the terminal)
     const svg = document.createElementNS(SVG_NS, 'svg');
@@ -110,7 +110,7 @@ const Hangman = (() => {
       b.disabled = true;
       b.classList.add(hit ? 'hit' : 'miss');
       b.setAttribute('aria-label', `Letter ${ch.toUpperCase()}, ${hit ? 'in the word' : 'not in the word'}`);
-      render(hit ? `Yes — "${ch.toUpperCase()}" is in the word.` : `No "${ch.toUpperCase()}".`);
+      render(hit ? `Yes, "${ch.toUpperCase()}" is in the word.` : `No "${ch.toUpperCase()}".`);
     }
 
     function render(note) {
@@ -118,12 +118,12 @@ const Hangman = (() => {
       svg.setAttribute('aria-label', `Hangman: ${wrong} of ${MAX_WRONG} wrong guesses`);
       const display = word.split('').map((l) => (guesses.includes(l) ? l : '_')).join(' ');
       wordDiv.textContent = display;
-      guessed.textContent = guesses.length ? `Guessed: ${guesses.map((g) => g.toUpperCase()).join(' ')}` : 'Guessed: —';
+      guessed.textContent = guesses.length ? `Guessed: ${guesses.map((g) => g.toUpperCase()).join(' ')}` : 'Guessed: none yet';
       if (!display.includes('_')) {
-        status.textContent = 'You win!';
+        status.textContent = 'You got it.';
         end();
       } else if (wrong >= MAX_WRONG) {
-        status.textContent = `You lost! Word was "${word}".`;
+        status.textContent = `Out of guesses. The word was "${word}".`;
         wordDiv.textContent = word.split('').join(' ');
         end();
       } else {

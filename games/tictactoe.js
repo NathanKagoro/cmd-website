@@ -57,13 +57,13 @@ const TicTacToe = (() => {
       board[i]=p;
       cells[i].textContent=p;
       if (checkWin(board,p)) {
-        status.textContent = `${p==='X'?'X':'O'} wins!`;
+        status.textContent = `${p} wins.`;
         boardEl.querySelectorAll('div').forEach(c=>c.style.pointerEvents='none');
         addPlayAgainButton();
         return;
       }
       if (board.every(Boolean)) {
-        status.textContent = 'Draw!';
+        status.textContent = 'Draw.';
         addPlayAgainButton();
         return;
       }

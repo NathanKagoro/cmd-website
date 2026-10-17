@@ -1,19 +1,18 @@
 # CMD Website
 
-CMD Website is a portfolio-style single-site experience that combines:
+Nathan Kagoro's portfolio at [nathankagoro.com](https://nathankagoro.com). It is a fake command prompt: you type commands to find the projects, resume and games. It also has:
 
-- A terminal interface as the primary interaction layer.
-- A desktop-style view accessible through the terminal flow.
-- Embedded mini-games.
-- Linked subprojects served under dedicated routes.
+- a desktop mode you reach from the terminal;
+- four small games;
+- links out to each project, most on GitHub Pages, with the Stock Exchange built into `/stock`.
 
-The repository is configured for Netlify-first deployment and routing.
+It deploys to Netlify, which also handles the redirects.
 
 ## What The Website Does
 
-### 1) Terminal Experience (Main Entry)
+### 1) Terminal (main entry)
 
-The homepage provides a command-line interface where users can run commands to navigate content and launch features.
+The homepage is a command prompt. Visitors are meant to explore it, so the page only shows one hint, `Type help to get started.`, and `help` lists the rest.
 
 Commands:
 
@@ -22,7 +21,7 @@ Commands:
 | `help` (also `commands`, `ls`, `?`) | List commands |
 | `about` | About Nathan |
 | `projects` / `projects <alias>` | List projects or open one |
-| any project name (`mmm`, `swahili`, `mathpath`, …) | Open that project directly |
+| any project name (`mmm`, `swahili`, `mathpath` and so on) | Open that project directly |
 | `resume` | View the CV, with a Download PDF link (phones get the link instead of an embedded PDF) |
 | `links` | LinkedIn and GitHub |
 | `play <game>` (also `games`) | `tictactoe`, `rps`, `hangman`, `2048` |
@@ -33,25 +32,25 @@ Commands:
 
 Behavior includes:
 
-- Command chips under the prompt (about, projects, resume, games, links) that run commands through the normal path, so tapping works on phones.
+- No command buttons under the prompt. The only one is the word `help` in the hint, which can be tapped so phone visitors can start. Command names in the `help` and `projects` output can be clicked or tapped too, and tapping anywhere else focuses the prompt.
 - Tab completes commands and `projects` / `play` / `sound` arguments; unknown commands suggest the closest match.
 - Command history with the up/down arrows.
 - A short typed intro that any key or tap skips (printed instantly with `prefers-reduced-motion`).
 - A deliberate ~500 ms "Loading" pause before each command.
 - Overlays (resume, games) are modal dialogs: Escape, the X button or the backdrop close them, and focus returns to the prompt.
-- A plain-HTML "quick view" (name, role, projects, resume, links) in `index.html` for search engines, no-JS visitors and screen readers. It is hidden once the terminal starts; the "Skip the terminal" link and the `quick view` chip show it.
+- A plain-HTML "quick view" (name, role, projects, resume, links) in `index.html` for search engines, no-JS visitors and screen readers. It is hidden once the terminal starts and isn't advertised anywhere in the UI. A skip link that only appears on keyboard focus opens it, and so does a direct link to `/#quick-view`.
 - Responsive layout for phones down to 360px wide.
 
 ### 2) Desktop Mode
 
-The desktop mode is a separate UI layer rendered over the page. It provides icon-based access to:
+Desktop mode sits on top of the terminal and has icons for:
 
 - Resume
 - Projects folder (launches subprojects)
 - Games
 - CMD return icon (returns to terminal interaction)
 
-The terminal and desktop views are route-aware, using the browser history state for a windowed route and default terminal route.
+Desktop mode lives at `/windows` and the terminal at `/`, so the browser's back and forward buttons switch between them.
 
 ### 3) Projects
 
@@ -81,7 +80,7 @@ The Stock Exchange is included as a **git submodule** at `projects/stock-exchang
 
 ### 4) Games
 
-Games are available via command and desktop launch:
+Games start from the `play` command or from desktop mode:
 
 - Tic Tac Toe
 - Rock Paper Scissors

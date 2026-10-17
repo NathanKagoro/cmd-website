@@ -6,7 +6,7 @@
   const overlay = document.getElementById('overlay');
   const overlayBody = document.getElementById('overlay-body');
   const overlayClose = document.getElementById('overlay-close');
-  const chips = document.getElementById('chips');
+  const hint = document.getElementById('hint');
   const quickView = document.getElementById('quick-view');
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -95,7 +95,7 @@
   }
 
   // Where focus goes after a command finishes / an overlay closes:
-  // the chip that was tapped, or the input for typed commands.
+  // the button that was tapped, or the input for typed commands.
   let lastTrigger = input;
 
   function restoreFocus() {
@@ -108,7 +108,7 @@
 
   function setInputDisabled(dis) {
     input.disabled = dis;
-    chips.querySelectorAll('button').forEach((b) => { b.disabled = dis; });
+    hint.querySelectorAll('button').forEach((b) => { b.disabled = dis; });
     if (!dis) restoreFocus();
   }
 
@@ -209,6 +209,10 @@
     });
   });
   document.getElementById('qv-back').addEventListener('click', closeQuickView);
+  // Keyboard users tabbing into the hidden quick view should see where focus went.
+  quickView.addEventListener('focusin', () => {
+    if (!quickView.classList.contains('open')) quickView.classList.add('open');
+  });
 
   // ---------- Loading (deliberate ~500ms for charm) ----------
 
@@ -238,7 +242,7 @@
   // Static projects are on GitHub Pages; the Stock Exchange is built into /stock.
   const PROJECTS = [
     { alias: 'damana', name: 'Damana Consult', category: 'Client & business sites', blurb: 'Management consultancy in Dar es Salaam (live client site)', entryPath: 'https://damanaconsultant.com/', repo: 'damana-consult-website' },
-    { alias: 'diplotech', name: 'Diplotech Solutions', category: 'Client & business sites', blurb: 'Consultancy where diplomacy meets technology', entryPath: 'https://nathankagoro.github.io/diplotech-website/', repo: 'diplotech-website' },
+    { alias: 'diplotech', name: 'Diplotech Solutions', category: 'Client & business sites', blurb: 'Site for a consultancy in diplomacy and technology', entryPath: 'https://nathankagoro.github.io/diplotech-website/', repo: 'diplotech-website' },
     { alias: 'laki', name: 'Laki Associates', category: 'Client & business sites', blurb: 'Demo site for an accounting and audit firm', entryPath: 'https://nathankagoro.github.io/Laki-associates-demo-website/', repo: 'Laki-associates-demo-website' },
     { alias: 'exortium', name: 'Exortium', category: 'Client & business sites', blurb: 'Demo site for a marketing agency', entryPath: 'https://nathankagoro.github.io/exortium-website/', repo: 'exortium-website' },
     { alias: 'yola', name: 'YOLA Home Fragrances', category: 'Client & business sites', blurb: 'Home fragrance brand in Dar es Salaam, with a staff inventory tool', entryPath: 'https://nathankagoro.github.io/yola-website/', repo: 'yola-website' },
@@ -249,7 +253,7 @@
     { alias: 'stock', name: 'Stock Exchange', category: 'Products & prototypes', blurb: 'Trade a replay of the London market, 2015 to 2025', entryPath: '/stock', repo: 'stock-exchange-simulator' },
     { alias: 'mmm', name: 'MMM Dashboard', category: 'Data & analytics', blurb: 'Which marketing channels move sales: a media-mix model', entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/', repo: 'MMM-Dashboard' },
     { alias: 'traffic', name: 'Dar Traffic Monitoring', category: 'Data & analytics', blurb: 'Traffic-speed pipeline for Dar es Salaam (concept page)', entryPath: 'https://nathankagoro.github.io/Dar-Traffic-Monitoring/', repo: 'Dar-Traffic-Monitoring' },
-    { alias: 'news', name: 'News Detection', category: 'Data & analytics', blurb: 'Media monitoring: a watch-list in, a morning digest out (concept page)', entryPath: 'https://nathankagoro.github.io/news-detection/', repo: 'news-detection' }
+    { alias: 'news', name: 'News Detection', category: 'Data & analytics', blurb: 'Media monitoring that turns a watch-list into a morning digest (concept page)', entryPath: 'https://nathankagoro.github.io/news-detection/', repo: 'news-detection' }
   ];
 
   const GAMES = ['tictactoe', 'rps', 'hangman', '2048'];
@@ -373,7 +377,7 @@
       ['datetime', 'Show current date and time'],
       ['sound', `Typing sounds on/off (now ${AudioEngine.isOn() ? 'on' : 'off'})`],
       ['clear', 'Clear the screen'],
-      ['update', 'Try this after exploring the other OS features for a surprise'],
+      ['update', 'A surprise. Try it once you have seen the rest'],
       ['help', 'Show this list (also: commands, ls, ?)']
     ];
     const items = rows.map(([cmd, desc]) => {
@@ -412,8 +416,9 @@
     },
 
     about: async () => {
-      return `Nathan Kagoro - Software Developer & Data Enthusiast
-Focused on analytics, AI tooling, and full-stack solutions.`;
+      return `Nathan Kagoro, software developer and data enthusiast.
+I build full-stack web apps and work on analytics and AI tools.
+Type ${cmdButton('projects')} to see what I've made.`;
     },
 
     resume: async () => {
@@ -422,10 +427,10 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
       el.innerHTML = `
         <h2 style="margin:0">Resume</h2>
         <div class="resume-actions">
-          <a class="chip" href="assets/resume.pdf" download="Nathan-Kagoro-Resume.pdf">Download PDF</a>
-          <a class="chip chip-alt" href="assets/resume.pdf" target="_blank" rel="noopener">Open in new tab</a>
+          <a class="btn" href="assets/resume.pdf" download="Nathan-Kagoro-Resume.pdf">Download PDF</a>
+          <a class="btn btn-alt" href="assets/resume.pdf" target="_blank" rel="noopener">Open in new tab</a>
         </div>
-        <p class="resume-mobile-note">The PDF opens best in your phone's viewer — use the buttons above.</p>
+        <p class="resume-mobile-note">On a phone the PDF opens best in your own viewer, so use the buttons above.</p>
         <iframe class="resume-frame" src="assets/resume.pdf" title="Nathan Kagoro resume (PDF)"></iframe>
       `;
       showOverlay(el, { label: 'Resume' });
@@ -576,7 +581,7 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
     }
   }
 
-  // Run a command as if typed: used by chips and clickable command names.
+  // Run a command as if typed: used by clickable command names (help list, hint).
   function runCommand(cmd, trigger) {
     if (busy) return;
     finishIntro();
@@ -585,18 +590,13 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
     handleCommand(cmd);
   }
 
-  chips.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-cmd]');
-    if (!btn) return;
-    runCommand(btn.dataset.cmd, coarsePointer ? btn : input);
-  });
-
-  output.addEventListener('click', (e) => {
+  [output, hint].forEach((el) => el.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-cmd]');
     if (!btn) return;
     e.stopPropagation();
+    // On touch screens keep focus on the tapped button so the keyboard stays down.
     runCommand(btn.dataset.cmd, coarsePointer ? btn : input);
-  });
+  }));
 
   // ---------- Tab completion ----------
 
@@ -651,7 +651,7 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
     }
     if (e.key === 'Tab' && !e.shiftKey && input.value.trim()) {
       // Only hijack Tab when there is something to complete, so keyboard
-      // users can still Tab out of an empty prompt to the chips.
+      // users can still Tab out of an empty prompt.
       e.preventDefault();
       complete();
       return;
@@ -679,7 +679,7 @@ Focused on analytics, AI tooling, and full-stack solutions.`;
 
   const intro = `Nathan OS [Build 1.0.5]
 © Nathan Kagoro. All rights reserved.
-A portfolio site built to mimic classic operating system experiences.
+A portfolio you explore by typing, like an old command prompt.
 Boot complete.`;
 
   let finishIntro = () => {};
@@ -703,7 +703,9 @@ Boot complete.`;
       if (finished) return;
       // Letters still reach the input so typing can start at once, but a
       // Space or Enter used only to skip shouldn't land in the prompt.
-      if (event && (event.key === ' ' || event.key === 'Enter')) event.preventDefault();
+      // (Links and buttons keep their Enter/Space so the skip link still works.)
+      const onControl = event && event.target && event.target.closest && event.target.closest('a, button');
+      if (event && !onControl && (event.key === ' ' || event.key === 'Enter')) event.preventDefault();
       finished = true;
       clearTimeout(timer);
       cleanup();
