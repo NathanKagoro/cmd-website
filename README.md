@@ -65,6 +65,7 @@ GitHub Pages projects are served at `https://nathankagoro.github.io/<repo>/`. A 
 | `diplotech` | Diplotech Solutions | [diplotech-website](https://github.com/NathanKagoro/diplotech-website) | GitHub Pages |
 | `laki` | Laki Associates | [Laki-associates-demo-website](https://github.com/NathanKagoro/Laki-associates-demo-website) | GitHub Pages |
 | `exortium` | Exortium | [exortium-website](https://github.com/NathanKagoro/exortium-website) | GitHub Pages |
+| `yola` | YOLA Home Fragrances | [yola-website](https://github.com/NathanKagoro/yola-website) | GitHub Pages (`gh-pages` branch) |
 | `swahili` | Swahili Voice IDE | [Swahili-ide](https://github.com/NathanKagoro/Swahili-ide) | GitHub Pages |
 | `mathpath` | MathPath | [mathpath-prototype](https://github.com/NathanKagoro/mathpath-prototype) | GitHub Pages |
 | `yuge` | YugeSavers | [yugesavers-prototype](https://github.com/NathanKagoro/yugesavers-prototype) | GitHub Pages |
