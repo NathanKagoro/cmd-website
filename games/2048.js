@@ -1,41 +1,47 @@
+// 2048 inside the terminal overlay, like the other games.
+// The engine and renderer live in games/2048/ (shared with the standalone
+// /2048 page) and are loaded on first use so index.html needs no changes.
 const TwoThousandFortyEight = (() => {
+  const SCRIPTS = ['games/2048/engine.js', 'games/2048/ui.js'];
+  let loading = null;
+
+  function baseUrl() {
+    const me = document.querySelector('script[src$="games/2048.js"]');
+    return me ? me.src.replace(/games\/2048\.js(\?.*)?$/, '') : '';
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('Failed to load ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureLoaded() {
+    if (window.Game2048Engine && window.Game2048UI) return Promise.resolve();
+    if (!loading) {
+      const base = baseUrl();
+      loading = SCRIPTS.reduce((p, src) => p.then(() => loadScript(base + src)), Promise.resolve())
+        .catch((err) => { loading = null; throw err; });
+    }
+    return loading;
+  }
+
   function createOverlay(showOverlay) {
     const el = document.createElement('div');
-    el.style.textAlign = 'center';
-    el.innerHTML = `<h2>2048</h2><p>Select difficulty:</p>`;
-    
-    const container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.justifyContent = 'center';
-    container.style.gap = '15px';
-    container.style.flexWrap = 'wrap';
-    
-    const difficulties = [
-      { name: 'Easy', value: 'easy' },
-      { name: 'Challenging', value: 'medium' },
-      { name: 'Extreme', value: 'hard' }
-    ];
-    
-    difficulties.forEach(d => {
-      const btn = document.createElement('button');
-      btn.textContent = d.name;
-      btn.style.padding = '10px 20px';
-      btn.style.cursor = 'pointer';
-      btn.style.fontSize = '16px';
-      btn.addEventListener('click', () => startGame(d.value));
-      container.appendChild(btn);
-    });
-    
-    el.appendChild(container);
-    
-    function startGame(difficulty) {
-      sessionStorage.loggedInUser = 'Guest';
-      sessionStorage.gamemode = difficulty;
-      window.location.href = '/2048/game/2048 game.html';
-    }
-    
+    el.textContent = 'Loading 2048...';
     showOverlay(el);
+    return ensureLoaded().then(() => {
+      if (!el.isConnected) return; // overlay was closed while loading
+      el.textContent = '';
+      window.Game2048UI.mount(el, { embedded: true });
+    }).catch(() => {
+      el.textContent = 'Could not load 2048. Check your connection and try again.';
+    });
   }
-  
+
   return { createOverlay };
 })();

@@ -2,22 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nathan OS Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Nathan Kagoro | portfolio</title>
+  <meta name="description" content="Nathan Kagoro is a software developer who builds full-stack web apps, analytics and AI tools. Type into a retro terminal to find his projects, resume and games." />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://nathankagoro.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nathan OS" />
+  <meta property="og:title" content="Nathan Kagoro | portfolio" />
+  <meta property="og:description" content="Software developer and data enthusiast. His projects, resume and games live in a retro terminal." />
+  <meta property="og:url" content="https://nathankagoro.com/" />
+  <meta property="og:image" content="https://nathankagoro.com/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Terminal window reading: Nathan Kagoro, Software Developer and Data Enthusiast. Full-stack web apps, analytics and AI tools." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nathan Kagoro | portfolio" />
+  <meta name="twitter:description" content="Software developer and data enthusiast. His projects, resume and games live in a retro terminal." />
+  <meta name="twitter:image" content="https://nathankagoro.com/assets/og-image.png" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="terminal">
-    <div id="output"></div>
-    <div id="input-line">
-      <span id="prompt">C:\NathanOS></span>
-      <input id="command-input" type="text" autofocus autocomplete="off" />
+  <a class="skip-link" href="#quick-view" id="skip-link">Skip to the plain-text version</a>
+
+  <!-- Plain-HTML profile: what search engines, no-JS visitors and screen-reader
+       users get. Hidden once the terminal boots; the keyboard-only skip link
+       (or a direct link to #quick-view) reveals it. -->
+  <main id="quick-view" tabindex="-1" aria-labelledby="qv-name">
+    <div class="qv-inner">
+      <p class="qv-prompt" aria-hidden="true">C:\NathanOS&gt; about</p>
+      <h1 id="qv-name">Nathan Kagoro</h1>
+      <p class="qv-role">Software developer and data enthusiast. I build full-stack web apps and work on analytics and AI tools.</p>
+
+      <h2>Projects</h2>
+      <h3>Client &amp; business sites</h3>
+      <ul class="qv-list">
+        <li><a href="https://damanaconsultant.com/">Damana Consult</a>: Management consultancy in Dar es Salaam (live client site) · <a class="qv-src" href="https://github.com/NathanKagoro/damana-consult-website">code</a></li>
+        <li><a href="https://nathankagoro.github.io/diplotech-website/">Diplotech Solutions</a>: Site for a consultancy in diplomacy and technology · <a class="qv-src" href="https://github.com/NathanKagoro/diplotech-website">code</a></li>
+        <li><a href="https://nathankagoro.github.io/Laki-associates-demo-website/">Laki Associates</a>: Demo site for an accounting and audit firm · <a class="qv-src" href="https://github.com/NathanKagoro/Laki-associates-demo-website">code</a></li>
+        <li><a href="https://nathankagoro.github.io/exortium-website/">Exortium</a>: Demo site for a marketing agency · <a class="qv-src" href="https://github.com/NathanKagoro/exortium-website">code</a></li>
+        <li><a href="https://nathankagoro.github.io/yola-website/">YOLA Home Fragrances</a>: Home fragrance brand in Dar es Salaam, with a staff inventory tool · <a class="qv-src" href="https://github.com/NathanKagoro/yola-website">code</a></li>
+      </ul>
+      <h3>Products &amp; prototypes</h3>
+      <ul class="qv-list">
+        <li><a href="https://nathankagoro.github.io/Swahili-ide/">Swahili Voice IDE</a>: Learn to code in Swahili, right in the browser · <a class="qv-src" href="https://github.com/NathanKagoro/Swahili-ide">code</a></li>
+        <li><a href="https://nathankagoro.github.io/mathpath-prototype/">MathPath</a>: Maths practice prototype with student and teacher views · <a class="qv-src" href="https://github.com/NathanKagoro/mathpath-prototype">code</a></li>
+        <li><a href="https://nathankagoro.github.io/yugesavers-prototype/">YugeSavers</a>: Discount supermarket app prototype · <a class="qv-src" href="https://github.com/NathanKagoro/yugesavers-prototype">code</a></li>
+        <li><a href="https://nathankagoro.github.io/Volleyball-game-tracker/">Volleyball Tracker</a>: Courtside volleyball scorer with a momentum chart · <a class="qv-src" href="https://github.com/NathanKagoro/Volleyball-game-tracker">code</a></li>
+        <li><a href="/stock">Stock Exchange</a>: Trade a replay of the London market, 2015 to 2025 · <a class="qv-src" href="https://github.com/NathanKagoro/stock-exchange-simulator">code</a></li>
+      </ul>
+      <h3>Data &amp; analytics</h3>
+      <ul class="qv-list">
+        <li><a href="https://nathankagoro.github.io/MMM-Dashboard/">MMM Dashboard</a>: Which marketing channels move sales: a media-mix model · <a class="qv-src" href="https://github.com/NathanKagoro/MMM-Dashboard">code</a></li>
+        <li><a href="https://nathankagoro.github.io/Dar-Traffic-Monitoring/">Dar Traffic Monitoring</a>: Traffic-speed pipeline for Dar es Salaam (concept page) · <a class="qv-src" href="https://github.com/NathanKagoro/Dar-Traffic-Monitoring">code</a></li>
+        <li><a href="https://nathankagoro.github.io/news-detection/">News Detection</a>: Media monitoring that turns a watch-list into a morning digest (concept page) · <a class="qv-src" href="https://github.com/NathanKagoro/news-detection">code</a></li>
+      </ul>
+
+      <h2>Resume &amp; links</h2>
+      <ul class="qv-list">
+        <li><a href="assets/resume.pdf" download="Nathan-Kagoro-Resume.pdf">Download resume (PDF)</a></li>
+        <li><a href="https://github.com/NathanKagoro" rel="noopener">GitHub (NathanKagoro)</a></li>
+        <li><a href="https://www.linkedin.com/in/nathan-kagoro-06ba31270/" rel="noopener">LinkedIn (Nathan Kagoro)</a></li>
+      </ul>
+
+      <button type="button" class="btn qv-back" id="qv-back">Back to the terminal</button>
     </div>
+  </main>
+
+  <div id="terminal">
+    <div id="output" role="log" aria-live="polite" aria-label="Terminal output"></div>
+    <div id="input-line">
+      <label id="prompt" for="command-input">C:\NathanOS&gt;</label>
+      <input id="command-input" type="text" autocomplete="off" autocapitalize="off"
+             autocorrect="off" spellcheck="false" enterkeyhint="go"
+             aria-describedby="hint" />
+    </div>
+    <p id="hint">Type <button type="button" class="inline-cmd" data-cmd="help">help</button> to get started.</p>
   </div>
 
-  <div id="overlay" class="hidden">
+  <div id="overlay" class="hidden" role="dialog" aria-modal="true" aria-label="Window">
+    <button id="overlay-close" type="button" aria-label="Close">X</button>
     <div id="overlay-body"></div>
-    <button id="overlay-close">X</button>
   </div>
 
   <script src="script.js"></script>
@@ -26,6 +99,5 @@
   <script src="games/rps.js"></script>
   <script src="games/hangman.js"></script>
   <script src="games/2048.js"></script>
-
 </body>
 </html>
