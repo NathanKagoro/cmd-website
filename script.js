@@ -236,8 +236,6 @@
 
   // Each project lives in its own GitHub repo (github.com/NathanKagoro/<repo>).
   // Static projects are on GitHub Pages; the Stock Exchange is built into /stock.
-  // Dar Traffic Monitoring and News Detection will join under 'Data & analytics'
-  // once their pages are built (their repos have no index.html yet).
   const PROJECTS = [
     { alias: 'damana', name: 'Damana Consult', category: 'Client & business sites', blurb: 'Management consultancy in Dar es Salaam (live client site)', entryPath: 'https://damanaconsultant.com/', repo: 'damana-consult-website' },
     { alias: 'diplotech', name: 'Diplotech Solutions', category: 'Client & business sites', blurb: 'Consultancy where diplomacy meets technology', entryPath: 'https://nathankagoro.github.io/diplotech-website/', repo: 'diplotech-website' },
@@ -246,8 +244,11 @@
     { alias: 'swahili', name: 'Swahili Voice IDE', category: 'Products & prototypes', blurb: 'Learn to code in Swahili, right in the browser', entryPath: 'https://nathankagoro.github.io/Swahili-ide/', repo: 'Swahili-ide' },
     { alias: 'mathpath', name: 'MathPath', category: 'Products & prototypes', blurb: 'Maths practice prototype with student and teacher views', entryPath: 'https://nathankagoro.github.io/mathpath-prototype/', repo: 'mathpath-prototype' },
     { alias: 'yuge', name: 'YugeSavers', category: 'Products & prototypes', blurb: 'Discount supermarket app prototype', entryPath: 'https://nathankagoro.github.io/yugesavers-prototype/', repo: 'yugesavers-prototype' },
+    { alias: 'volley', name: 'Volleyball Tracker', category: 'Products & prototypes', blurb: 'Courtside volleyball scorer with a momentum chart', entryPath: 'https://nathankagoro.github.io/Volleyball-game-tracker/', repo: 'Volleyball-game-tracker' },
     { alias: 'stock', name: 'Stock Exchange', category: 'Products & prototypes', blurb: 'Trade a replay of the London market, 2015 to 2025', entryPath: '/stock', repo: 'stock-exchange-simulator' },
-    { alias: 'mmm', name: 'MMM Dashboard', category: 'Data & analytics', blurb: 'Which marketing channels move sales: a media-mix model', entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/', repo: 'MMM-Dashboard' }
+    { alias: 'mmm', name: 'MMM Dashboard', category: 'Data & analytics', blurb: 'Which marketing channels move sales: a media-mix model', entryPath: 'https://nathankagoro.github.io/MMM-Dashboard/', repo: 'MMM-Dashboard' },
+    { alias: 'traffic', name: 'Dar Traffic Monitoring', category: 'Data & analytics', blurb: 'Traffic-speed pipeline for Dar es Salaam (concept page)', entryPath: 'https://nathankagoro.github.io/Dar-Traffic-Monitoring/', repo: 'Dar-Traffic-Monitoring' },
+    { alias: 'news', name: 'News Detection', category: 'Data & analytics', blurb: 'Media monitoring: a watch-list in, a morning digest out (concept page)', entryPath: 'https://nathankagoro.github.io/news-detection/', repo: 'news-detection' }
   ];
 
   const GAMES = ['tictactoe', 'rps', 'hangman', '2048'];
