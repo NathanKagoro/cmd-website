@@ -57,13 +57,13 @@ const TicTacToe = (() => {
       board[i]=p;
       cells[i].textContent=p;
       if (checkWin(board,p)) {
-        status.textContent = `${p==='X'?'X':'O'} wins!`;
+        status.textContent = `${p} wins.`;
         boardEl.querySelectorAll('div').forEach(c=>c.style.pointerEvents='none');
         addPlayAgainButton();
         return;
       }
       if (board.every(Boolean)) {
-        status.textContent = 'Draw!';
+        status.textContent = 'Draw.';
         addPlayAgainButton();
         return;
       }
@@ -87,10 +87,8 @@ const TicTacToe = (() => {
       playAgainBtn.style.border = 'none';
       playAgainBtn.style.borderRadius = '4px';
       playAgainBtn.addEventListener('click', () => {
-        // Close current overlay and start new game
-        const overlay = document.getElementById('overlay');
-        if (overlay) overlay.classList.add('hidden');
-        setTimeout(() => TicTacToe.createOverlay(showOverlay), 100);
+        // Replace the overlay content with a fresh game (keeps focus in the dialog)
+        TicTacToe.createOverlay(showOverlay);
       });
       el.appendChild(playAgainBtn);
     }

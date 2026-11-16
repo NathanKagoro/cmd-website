@@ -1,13 +1,8 @@
 {
-  "name": "cmd-website-workspace",
+  "name": "cmd-website",
   "private": true,
-  "workspaces": [
-    "projects/MMM-Dashboard",
-    "projects/Stock Exchange/backend",
-    "projects/Stock Exchange/frontend"
-  ],
   "scripts": {
-    "build:mmm": "npm run build --workspace \"projects/MMM-Dashboard\"",
-    "build:stock": "npm run build --workspace \"projects/Stock Exchange/frontend\""
+    "build": "bash build.sh",
+    "test": "node --test \"games/2048/tests/*.test.js\""
   }
 }

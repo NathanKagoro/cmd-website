@@ -22,10 +22,10 @@ const RPS = (() => {
     function play(player) {
       const comp=options[Math.floor(Math.random()*3)];
       let outcome='';
-      if (player===comp) outcome='Draw!';
+      if (player===comp) outcome='Draw.';
       else if ((player==='rock'&&comp==='scissors')||(player==='paper'&&comp==='rock')||(player==='scissors'&&comp==='paper'))
-        outcome='You win!';
-      else outcome='You lose!';
+        outcome='You win.';
+      else outcome='You lose.';
       result.textContent=`You: ${player} | Computer: ${comp} -> ${outcome}`;
       
       // Add play again button

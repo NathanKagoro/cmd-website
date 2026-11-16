@@ -1,82 +1,362 @@
-body {
-  margin: 0;
-  background: black;
-  color: #00ff66;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 16px;
+:root {
+  --green: #00ff66;
+  --green-dim: #00a845;
+  --green-faint: rgba(0, 255, 102, 0.12);
+  --red: #ff5f56;
+  --bg: #000;
+  --font: 'Consolas', 'Courier New', ui-monospace, monospace;
+  --gutter: 12px;
 }
 
-#terminal {
-  padding: 10px;
-  height: 100vh;
-  overflow-y: auto;
-  white-space: pre-wrap;
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--green);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-x: hidden;
 }
+
+a { color: var(--green); }
+a:hover { background: var(--green); color: var(--bg); }
+
+:focus-visible {
+  outline: 2px dashed var(--green);
+  outline-offset: 3px;
+}
+
+kbd {
+  font-family: inherit;
+  border: 1px solid var(--green-dim);
+  padding: 0 4px;
+}
+
+/* ---------- Terminal ---------- */
+
+#terminal {
+  padding: var(--gutter);
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+}
+
+#output { white-space: pre-wrap; }
 
 #input-line {
   display: flex;
+  align-items: baseline;
 }
 
 #prompt {
-  margin-right: 5px;
+  margin-right: 0.5ch;
+  white-space: nowrap;
 }
 
 #command-input {
   background: transparent;
   border: none;
-  color: #00ff66;
-  font-family: inherit;
+  color: var(--green);
+  caret-color: var(--green);
+  font: inherit;
+  font-size: max(16px, 1em); /* >=16px stops iOS zoom-on-focus */
   outline: none;
   flex: 1;
+  min-width: 0;
+  padding: 0;
 }
+
+#command-input:disabled { opacity: 0.6; }
+
+#hint {
+  margin: 12px 0 8px;
+  color: var(--green-dim);
+}
+#hint .inline-cmd { color: var(--green); }
+#hint .inline-cmd:hover { color: var(--bg); }
+
+/* Bordered terminal-style buttons (resume actions, quick view "back") */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 4px 12px;
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn::before { content: '> '; white-space: pre; color: var(--green-dim); }
+.btn:hover, .btn:active { background: var(--green); color: var(--bg); }
+.btn:hover::before, .btn:active::before { color: var(--bg); }
+.btn-alt { border-style: dashed; }
+
+/* Clickable command names inside output (help list, suggestions) */
+.inline-cmd {
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--green);
+  padding: 0;
+  color: var(--green);
+  font: inherit;
+  cursor: pointer;
+}
+.inline-cmd:hover { background: var(--green); color: var(--bg); }
+.inline-cmd:disabled { cursor: progress; }
+
+.dim { color: var(--green-dim); }
+
+.help-table {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 2ch;
+  row-gap: 2px;
+  white-space: normal;
+  margin: 4px 0;
+}
+.help-table dt { padding-left: 2ch; }
+.help-table dd { margin: 0; color: var(--green-dim); }
+.help-table.one-col { grid-template-columns: max-content; }
 
 .spinner {
   display: inline-block;
   width: 1em;
   height: 1em;
-  border: 2px solid #00ff66;
+  vertical-align: -0.15em;
+  border: 2px solid var(--green);
   border-radius: 50%;
   border-top-color: transparent;
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  100% { transform: rotate(360deg); }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.hidden { display: none !important; }
+
+/* ---------- Skip link + static quick view ---------- */
+
+/* Visually hidden until it gets keyboard focus. */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 2000;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip-link:focus {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  background: var(--bg);
+  border: 1px solid var(--green);
+  padding: 8px 12px;
 }
 
-.hidden {
-  display: none;
+#quick-view {
+  padding: 24px max(16px, env(safe-area-inset-left));
+  line-height: 1.5;
 }
+#quick-view:focus { outline: none; }
+.qv-inner { max-width: 720px; margin: 0 auto; }
+.qv-prompt { color: var(--green-dim); margin: 0 0 8px; }
+#quick-view h1 { font-size: clamp(1.8rem, 7vw, 2.6rem); margin: 0 0 4px; }
+#quick-view h2 { font-size: 1.1rem; margin: 28px 0 8px; border-bottom: 1px solid var(--green-dim); padding-bottom: 4px; }
+.qv-role { margin: 0; }
+.qv-list { margin: 0; padding-left: 0; list-style: none; }
+.qv-list li { padding: 6px 0; }
+.qv-list li::before { content: '- '; color: var(--green-dim); }
+.qv-back { margin-top: 28px; }
+
+/* With JS the terminal is the main view; the quick view stays in the
+   accessibility tree but is visually hidden until asked for. */
+.js #quick-view:not(.open) {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  padding: 0;
+}
+.js #quick-view.open {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: var(--bg);
+  overflow-y: auto;
+}
+html:not(.js) #terminal,
+html:not(.js) #overlay,
+html:not(.js) .skip-link,
+html:not(.js) .qv-back { display: none; }
+
+/* ---------- Overlay (dialog) ---------- */
 
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.95);
-  color: #00ff66;
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  color: var(--green);
   z-index: 100;
-  padding: 20px;
+  padding: 56px var(--gutter) 24px;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 
 #overlay-body {
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 #overlay-close {
   position: fixed;
   top: 10px;
-  right: 20px;
-  background: transparent;
-  color: #00ff66;
-  border: 1px solid #00ff66;
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 1;
+  min-width: 40px;
+  min-height: 40px;
+  background: var(--bg);
+  color: var(--green);
+  border: 1px solid var(--green);
   cursor: pointer;
-  font-family: inherit;
-  font-size: 16px;
+  font: inherit;
 }
+#overlay-close:hover { background: var(--green); color: var(--bg); }
+#overlay-close:focus-visible { outline: 2px dashed var(--green); outline-offset: 3px; }
 
 #overlay embed {
   display: block;
   margin: 0 auto;
   border: none;
 }
+
+/* Default look for buttons inside overlays (zero specificity, so games can
+   override with their own classes). */
+:where(#overlay-body) button {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  font: inherit;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+:where(#overlay-body) button:hover:not(:disabled) { background: var(--green); color: var(--bg); }
+
+/* Resume */
+.resume-view { display: flex; flex-direction: column; gap: 12px; }
+.resume-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.resume-frame {
+  width: 100%;
+  height: calc(100dvh - 140px);
+  min-height: 400px;
+  border: 1px solid var(--green-dim);
+  background: #fff;
+}
+.resume-mobile-note { color: var(--green-dim); margin: 0; }
+
+/* ---------- Hangman ---------- */
+
+.hangman { text-align: center; }
+.hangman h2 { margin-top: 0; }
+.hangman svg { max-width: 100%; height: auto; }
+.hm-word { font-size: clamp(1.2em, 6vw, 1.6em); letter-spacing: 0.12em; margin: 12px 0 4px; overflow-wrap: anywhere; }
+.hm-status { min-height: 1.4em; margin: 6px 0; }
+.hm-guessed { color: var(--green-dim); min-height: 1.4em; }
+.hm-keys {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+  gap: 6px;
+  max-width: 520px;
+  margin: 14px auto 0;
+}
+.hm-keys button.hm-key {
+  min-height: 42px;
+  padding: 0;
+  text-transform: uppercase;
+}
+.hm-keys button.hm-key.hit { background: var(--green); color: var(--bg); opacity: 0.85; }
+.hm-keys button.hm-key.miss { border-color: var(--red); color: var(--red); opacity: 0.55; text-decoration: line-through; }
+.hm-keys button.hm-key:disabled { cursor: default; }
+.flash { animation: flash 0.4s; }
+@keyframes flash { 50% { background: var(--green-faint); } }
+
+/* ---------- Desktop mode ---------- */
+
+#desktop-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  padding: 48px;
+}
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 96px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  text-shadow: 0 1px 2px #000;
+  cursor: pointer;
+  padding: 6px;
+}
+.desktop-icon img { width: 64px; height: 64px; }
+.desktop-icon:hover, .desktop-icon:focus-visible { background: rgba(255, 255, 255, 0.15); }
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 600px) {
+  body { font-size: 17px; }
+  :root { --gutter: 16px; }
+  .btn { min-height: 44px; padding: 6px 14px; }
+  #hint .inline-cmd { display: inline-block; padding: 8px 0 2px; }
+  .help-table { grid-template-columns: 1fr; row-gap: 0; }
+  .help-table dt { padding-left: 0; margin-top: 6px; }
+  .help-table dd { padding-left: 2ch; }
+  .resume-frame { display: none; }
+  #desktop-icons { gap: 12px; padding: 24px 12px; justify-content: center; }
+  .desktop-icon { width: 88px; }
+}
+
+@media (min-width: 601px) {
+  .resume-mobile-note { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition: none !important;
+  }
+  /* keep a static "busy" ring instead of spinning */
+  .spinner { animation: none; }
+}
+
+/* Project groups in the `projects` listing and the quick view */
+.project-group { margin: 10px 0 2px; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85em; }
+#quick-view h3 { margin: 18px 0 6px; font-size: 1em; text-transform: uppercase; letter-spacing: 0.08em; }
+.qv-src { opacity: 0.75; font-size: 0.9em; }

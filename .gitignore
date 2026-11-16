@@ -44,3 +44,6 @@ frontend/.vite/
 # Misc
 *.local
 .cache/
+
+# Build output
+dist/
